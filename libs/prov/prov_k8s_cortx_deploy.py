@@ -288,6 +288,11 @@ class ProvDeployK8sCortxLib:
         LOGGER.info("Deploy Cortx cloud")
         cmd = Template(common_cmd.DEPLOY_CLUSTER_CMD).substitute(path=remote_code_path,
                                                                  log=self.deploy_cfg['log_file'])
+        export_cmd = Template(common_cmd.LINUX_EXPORT).substitute(
+            key=self.deploy_cfg["deploy_ha_timeout_key"], val=
+            str(self.deploy_cfg["deploy_ha_timeout_val"])) + "s"
+        cmd = export_cmd + " && " + Template(common_cmd.DEPLOY_CLUSTER_CMD).substitute(
+            path=remote_code_path, log=self.deploy_cfg['log_file'])
         try:
             resp = node_obj.execute_cmd(cmd, read_lines=True, recv_ready=True,
                                         timeout=self.deploy_cfg['timeout']['deploy'])
