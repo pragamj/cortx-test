@@ -483,6 +483,8 @@ class ProvDeployK8sCortxLib:
         nodeport_https = kwargs.get("https_port", self.deploy_cfg['https_port'])
         control_nodeport_https = kwargs.get("control_https_port",
                                             self.deploy_cfg['control_port_https'])
+        deployment_type = kwargs.get("deployment_type", self.deployment_type)
+        client_instance = kwargs.get("client_instance", self.client_instance)
 
         LOGGER.debug("Service type & Ports are %s\n%s\n%s\n%s", service_type,
                      nodeport_http, nodeport_https, control_nodeport_https)
@@ -551,10 +553,10 @@ class ProvDeployK8sCortxLib:
                                                       control_nodeport_https=
                                                       self.control_nodeport_https,
                                                       service_type=self.service_type,
-                                                      deployment_type=self.deployment_type,
+                                                      deployment_type=deployment_type,
                                                       namespace=namespace,
                                                       lb_count=self.lb_count,
-                                                      client_instance=self.client_instance)
+                                                      client_instance=client_instance)
         if not resp_passwd[0]:
             return False, "Failed to update service type,deployment type, ports in solution file"
         # Update resources for third_party
@@ -1199,7 +1201,8 @@ class ProvDeployK8sCortxLib:
         return True
 
     def deploy_stage(self, sol_file_path, master_node_list,
-                     worker_node_list, namespace, system_disk_dict):
+                     worker_node_list, namespace, system_disk_dict,
+                     **kwargs):
         """
         This method is used to perform deploy,validate cluster and check services
         param: master_node_list: master_node_obj list
@@ -1209,6 +1212,7 @@ class ProvDeployK8sCortxLib:
          provisioner path
         returns True, resp
         """
+        deployment_type = kwargs.get("deployment_type", self.deployment_type)
         LOGGER.info("Step to Perform Cortx Cluster Deployment")
         deploy_resp = self.deploy_cortx_cluster(sol_file_path, master_node_list,
                                                 worker_node_list, system_disk_dict,
@@ -1229,7 +1233,8 @@ class ProvDeployK8sCortxLib:
             if not deploy_resp[1]:
                 LOGGER.info("Step to Check  ALL service status")
                 time.sleep(self.deploy_cfg["sleep_time"])
-                service_status = self.check_service_status(master_node_list[0])
+                service_status = self.check_service_status(master_node_list[0],
+                                                           deployment_type=deployment_type)
                 LOGGER.info("All service resp is %s", service_status)
                 assert_utils.assert_true(service_status[0], service_status[1])
                 if self.deployment_type != self.deploy_cfg["deployment_type_data"]:
@@ -1345,6 +1350,8 @@ class ProvDeployK8sCortxLib:
         report_path = kwargs.get("report_filepath", self.deploy_cfg["report_file"])
         data_disk_size = kwargs.get("data_disk_size", self.deploy_cfg["data_disk_size"])
         metadata_disk_size = kwargs.get("meta_disk_size", self.deploy_cfg["metadata_disk_size"])
+        deployment_type = kwargs.get("deployment_type", self.deployment_type)
+        client_instance = kwargs.get("client_instances", self.client_instance)
         row = list()
         row.append(len(worker_node_list))
         LOGGER.info("STARTED: {%s node (SNS-%s+%s+%s) (DIX-%s+%s+%s) "
@@ -1391,7 +1398,9 @@ class ProvDeployK8sCortxLib:
                                         namespace=namespace,
                                         https_port=self.nodeport_https,
                                         http_port=self.nodeport_http,
-                                        control_https_port=self.control_nodeport_https)
+                                        control_https_port=self.control_nodeport_https,
+                                        deployment_type=deployment_type,
+                                        client_instance=client_instance)
             assert_utils.assert_true(resp[0], "Failure updating solution.yaml")
             with open(resp[1]) as file:
                 LOGGER.info("The detailed solution yaml file is\n")
@@ -1458,12 +1467,14 @@ class ProvDeployK8sCortxLib:
             return False, "All Services are not started."
         return response
 
-    def check_service_status(self, master_node_obj: LogicalNode):
+    def check_service_status(self, master_node_obj: LogicalNode, **kwargs):
         """
         Function to check all service status
         param: nodeObj of Master node.
         returns: dict of all pods with service status True/False and time taken
         """
+        deployment_type = kwargs.get("deployment_type", self.deployment_type)
+        LOGGER.debug("DEPLOYMENT TYPE IN SERVICE CHECK IS %s", deployment_type)
         resp = self.check_pods_status(master_node_obj)
         assert_utils.assert_true(resp, "All Pods are not in Running state")
         if self.deployment_type in self.data_only_list:
