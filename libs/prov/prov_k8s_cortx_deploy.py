@@ -1408,6 +1408,7 @@ class ProvDeployK8sCortxLib:
                     LOGGER.info(line)
             sol_file_path = resp[1]
             system_disk_dict = resp[2]
+            self.script_pre_req(master_node_list)
             deploy_stage_resp = self.deploy_stage(sol_file_path,
                                                   master_node_list,
                                                   worker_node_list,
@@ -2033,3 +2034,16 @@ class ProvDeployK8sCortxLib:
                       sort_keys=False, Dumper=noalias_dumper)
             soln.close()
         return True, filepath
+
+    @staticmethod
+    def script_pre_req(master_node_list: LogicalNode):
+        """  This method is used to install the yq module
+        returns True
+        """
+        cmd = [common_cmd.YQ_INSTALL, common_cmd.YQ_WGET]
+        for cmd_q in cmd:
+            resp = master_node_list.execute_cmd(cmd_q)
+            LOGGER.debug("pre-req_script resp is %s", resp)
+        if master_node_list.path_exists("/usr/local/bin/yq"):
+            master_node_list.remove_dir("/usr/local/bin/yq")
+        return True
