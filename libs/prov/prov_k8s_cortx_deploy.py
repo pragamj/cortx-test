@@ -1408,7 +1408,7 @@ class ProvDeployK8sCortxLib:
                     LOGGER.info(line)
             sol_file_path = resp[1]
             system_disk_dict = resp[2]
-            self.script_pre_req(master_node_list)
+            self.script_pre_req(master_node_list[0])
             deploy_stage_resp = self.deploy_stage(sol_file_path,
                                                   master_node_list,
                                                   worker_node_list,
