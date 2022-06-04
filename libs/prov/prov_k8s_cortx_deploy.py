@@ -2040,10 +2040,8 @@ class ProvDeployK8sCortxLib:
         """  This method is used to install the yq module
         returns True
         """
-        cmd = [common_cmd.YQ_INSTALL, common_cmd.YQ_WGET]
-        for cmd_q in cmd:
-            resp = master_node_list.execute_cmd(cmd_q)
-            LOGGER.debug("pre-req_script resp is %s", resp)
+        resp = master_node_list.execute_cmd(common_cmd.YQ_WGET)
+        LOGGER.debug("pre-req_script resp is %s", resp)
         if master_node_list.path_exists("/usr/local/bin/yq"):
             master_node_list.remove_dir("/usr/local/bin/yq")
         return True

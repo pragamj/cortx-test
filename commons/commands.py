@@ -75,7 +75,6 @@ LINUX_STRING_CMD = "sed '/{}/!d' {} > {}"
 LINUX_REPLACE_STRING = "sed -i 's/{}/{}/g' {}"
 LINUX_EXPORT = "export $key=$val"
 LINE_COUNT_CMD = "cat {} | wc -l"
-YQ_INSTALL = "pip3 show yq && pip3 uninstall yq -y"
 YQ_WGET = "wget https://github.com/mikefarah/yq/releases/download/v4.25.1/yq_linux_386.tar.gz -O - " \
           "| tar xz && mv yq_linux_386 /usr/bin/yq"
 DISCONNECT_OS_DRIVE_CMD = "echo 1 > /sys/block/{}/device/delete"
