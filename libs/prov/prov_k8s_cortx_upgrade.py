@@ -91,7 +91,7 @@ class ProvUpgradeK8sCortxLib:
         """
         LOGGER.info("Upgrading CORTX image to version: %s.", upgrade_image_version)
         upg_disrupt = Template(common_cmd.UPGRADE_NEG_CMD).substitute(
-            dir=self.prov_obj.deploy_cfg["k8s_dir"]) + "-i" + upgrade_image_version + "-r"
+            dir=self.prov_obj.deploy_cfg["k8s_dir"]) + " -i " + upgrade_image_version + " -r"
         resp = node_obj.execute_cmd(upg_disrupt, read_lines=True)
         return resp
 
