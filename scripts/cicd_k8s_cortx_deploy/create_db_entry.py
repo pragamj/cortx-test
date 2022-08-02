@@ -133,8 +133,11 @@ def main():
             jira_obj = jira_utils.JiraTask(jira_id, jira_pswd)
             te_details = jira_obj.get_issue_details(test_exe_no)
             test_env = te_details.fields.customfield_21006
-            print("TEST ENV", test_env[0].split("_")[0:2])
-            nodes_cnt = w2n.word_to_num(test_env[0].split("_")[0])
+            test_env = test_env[0].split("_")[0]
+            if test_env[0].split("_")[1] != "node":
+                test_env = " ".join(test_env[0].split("_")[0:2])
+                print("TEST-ENV", " ".join(test_env[0].split("_")[0:2]))
+            nodes_cnt = w2n.word_to_num(test_env)
             print("WORKER NODE COUNT FOR ADDING DB ENTRY", nodes_cnt)
         else:
             nodes_cnt = os.getenv("NODES_COUNT")
