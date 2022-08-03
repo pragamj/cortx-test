@@ -135,9 +135,9 @@ class TestProvPodsDeployment:
         resp = LogicalNode.get_all_pods(self.master_node_list[0],
                                         pod_prefix=constants.POD_NAME_PREFIX)
         assert_utils.assert_true(resp[0])
-        self.log.info("Pod list are %s", resp[0])
+        self.log.info("Pod list are %s", resp)
         self.log.info("Pod count is %s", len(resp))
-        assert_utils.assert_equal(len(resp), len(self.worker_node_list))
+        assert_utils.assert_equal(len(resp), config['cvg_count']*len(self.worker_node_list))
         self.collect_sb = False
         self.destroy_flag = True
         self.log.info("===Test Completed===")
@@ -165,9 +165,9 @@ class TestProvPodsDeployment:
         resp = LogicalNode.get_all_pods(self.master_node_list[0],
                                         pod_prefix=constants.SERVER_POD_NAME_PREFIX)
         assert_utils.assert_true(resp[0])
-        self.log.info("Pod list are %s", resp[0])
+        self.log.info("Pod list are %s", resp)
         self.log.info("Pod count is %s", len(resp))
-        assert_utils.assert_equal(len(resp), len(self.worker_node_list))
+        assert_utils.assert_equal(len(resp), 2*len(self.worker_node_list))
         self.collect_sb = False
         self.destroy_flag = True
         self.log.info("===Test Completed===")
