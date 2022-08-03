@@ -1581,7 +1581,7 @@ class ProvDeployK8sCortxLib:
         """
         config_list = []
         LOGGER.debug("Configurations for %s Nodes", num_nodes)
-        for i in range(1, 4):
+        for i in range(1, 3):
             config = {}
             cvg_count = i
             sns_total = num_nodes * cvg_count
