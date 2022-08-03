@@ -189,7 +189,7 @@ class TestProvPodsDeployment:
             sns_data=config['sns_data'], sns_parity=config['sns_parity'],
             sns_spare=config['sns_spare'], dix_data=config['dix_data'],
             dix_parity=config['dix_parity'], dix_spare=config['dix_spare'],
-            cvg_count=config['cvg_count'], data_disk_per_cvg=config['data_disk_per_cvg'],
+            cvg_count=1, data_disk_per_cvg=config['data_disk_per_cvg'],
             master_node_list=self.master_node_list, worker_node_list=self.worker_node_list,
             destroy_setup_flag=False)
         resp = LogicalNode.get_all_pods(self.master_node_list[0],
@@ -211,7 +211,9 @@ class TestProvPodsDeployment:
         """
         config_list = self.deploy_obj.get_durability_config(num_nodes=
                                                             len(self.worker_node_list))
-        config = secrets.choice(config_list)
+        for config_set in config_list:
+            if config_set["cvg_count"] == 1:
+                config = config_set
         self.log.info("config is picked :%s", config)
         self.log.info("Running %s N with config %s+%s+%s", (self.num_nodes - 1),
                       config['sns_data'], config['sns_parity'],
@@ -268,7 +270,9 @@ class TestProvPodsDeployment:
         """
         config_list = self.deploy_obj.get_durability_config(num_nodes=
                                                             len(self.worker_node_list))
-        config = secrets.choice(config_list)
+        for config_set in config_list:
+            if config_set["cvg_count"] == 1:
+                config = config_set
         self.log.info("config is picked :%s", config)
         self.log.info("Running %s N with config %s+%s+%s", (self.num_nodes - 1),
                       config['sns_data'], config['sns_parity'],
@@ -279,7 +283,7 @@ class TestProvPodsDeployment:
             dix_parity=config['dix_parity'], dix_spare=config['dix_spare'],
             cvg_count=config['cvg_count'], data_disk_per_cvg=config['data_disk_per_cvg'],
             master_node_list=self.master_node_list, worker_node_list=self.worker_node_list,
-            deployment_type=self.prov_cfg["deployment_type_data"],client_instances=
+            deployment_type=self.prov_cfg["deployment_type_data"], client_instances=
             self.prov_cfg["data_client_instance"], destroy_setup_flag=False)
         self.log.info("STARTED: Verify multiple m0cp/m0cat operation")
         self.motr_obj = MotrCoreK8s()
