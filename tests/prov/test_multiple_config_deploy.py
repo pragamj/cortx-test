@@ -32,8 +32,8 @@ from commons.params import LATEST_LOG_FOLDER
 from commons.utils import assert_utils
 from commons.utils import support_bundle_utils
 from config import CMN_CFG
-from config import  PROV_CFG
-from config import  DEPLOY_CFG
+from config import PROV_CFG
+from config import DEPLOY_CFG
 from libs.prov.prov_k8s_cortx_deploy import ProvDeployK8sCortxLib
 
 
@@ -75,7 +75,6 @@ class TestMultipleConfDeploy:
                                              self.worker_node_list)
         assert_utils.assert_true(resp)
         self.deploy_obj.close_connections(self.master_node_list, self.worker_node_list)
-        del self.deploy_obj
 
     def multiple_node_deployment(self, node, config):
         """

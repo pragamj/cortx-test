@@ -34,7 +34,6 @@ from commons.utils import support_bundle_utils
 from commons.helpers.pods_helper import LogicalNode
 from config import CMN_CFG
 from config import PROV_CFG
-from config import DEPLOY_CFG
 from libs.motr import TEMP_PATH
 from libs.motr.motr_core_k8s_lib import MotrCoreK8s
 from libs.prov.prov_k8s_cortx_deploy import ProvDeployK8sCortxLib
@@ -82,7 +81,6 @@ class TestProvPodsDeployment:
                                                  self.worker_node_list)
             assert_utils.assert_true(resp)
         self.deploy_obj.close_connections(self.master_node_list, self.worker_node_list)
-        del self.deploy_obj
 
     @pytest.mark.lc
     @pytest.mark.cluster_deployment
