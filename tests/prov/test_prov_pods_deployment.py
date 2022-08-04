@@ -81,6 +81,8 @@ class TestProvPodsDeployment:
             resp = self.deploy_obj.destroy_setup(self.master_node_list[0],
                                                  self.worker_node_list)
             assert_utils.assert_true(resp)
+        self.deploy_obj.close_connections(self.master_node_list, self.worker_node_list)
+        del self.deploy_obj
 
     @pytest.mark.lc
     @pytest.mark.cluster_deployment
