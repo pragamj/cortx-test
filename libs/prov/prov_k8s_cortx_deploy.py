@@ -1570,6 +1570,7 @@ class ProvDeployK8sCortxLib:
                     hctl_status.update({pod_name: resp[0]})
                     LOGGER.debug("Service time taken from data pod is %s",
                                  end_time - int(time.time()))
+                    master_node_obj.disconnect()
                 LOGGER.debug(hctl_status)
             if self.deployment_type in self.server_only_list:
                 for server_pod_name in server_pod_list:
@@ -1577,6 +1578,7 @@ class ProvDeployK8sCortxLib:
                     hctl_status.update({server_pod_name: resp[0]})
                     LOGGER.debug("Service time taken from server pod is %s",
                                  end_time - int(time.time()))
+                    master_node_obj.disconnect()
                 LOGGER.debug(hctl_status)
             LOGGER.debug("services status is %s, End Time is %s", resp[0], end_time)
             status = all(element is True for element in list(hctl_status.values()))
