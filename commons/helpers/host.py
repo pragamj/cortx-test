@@ -110,7 +110,7 @@ class AbsHost:
             raise RuntimeError('Rethrowing the SSH exception') from error
         finally:
             LOGGER.debug(
-                "Exception while connecting to server: in Finally block",)
+                "Exception while connecting to server: in Finally block")
             self.host_obj.close()
 
     def connect_pysftp(
