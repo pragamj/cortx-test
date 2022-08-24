@@ -111,8 +111,6 @@ class AbsHost:
         finally:
             LOGGER.debug(
                 "Exception while connecting to server: in Finally block")
-            if self.host_obj:
-                self.host_obj.close()
 
     def connect_pysftp(
             self,
