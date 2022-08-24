@@ -135,6 +135,7 @@ class AbsHost:
         Disconnects the host obj.
         """
         if self.host_obj:
+            LOGGER.debug("Disconnecting the host obj")
             self.host_obj.close()
         if self.shell_obj:
             self.shell_obj.close()
