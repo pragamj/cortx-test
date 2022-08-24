@@ -93,7 +93,7 @@ class TestMultipleConfDeploy:
             dix_parity=config['dix_parity'], dix_spare=config['dix_spare'],
             cvg_count=config['cvg_per_node'], data_disk_per_cvg=config['data_disk_per_cvg'],
             master_node_list=self.master_node_list, worker_node_list=self.worker_node_list,
-            s3_instance=2)
+            s3_instance=1)
         self.collect_sb = False
 
     @pytest.mark.lc
