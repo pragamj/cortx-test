@@ -108,6 +108,8 @@ class AbsHost:
             if shell and self.shell_obj:
                 self.shell_obj.close()
             raise RuntimeError('Rethrowing the SSH exception') from error
+        finally:
+            self.host_obj.close()
 
     def connect_pysftp(
             self,
