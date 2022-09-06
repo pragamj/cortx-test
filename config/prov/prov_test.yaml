@@ -227,7 +227,7 @@ k8s_cortx_deploy:
         mem: '256Mi'
         cpu: '250m'
       limits:
-        mem: '512Mi'
+        mem: '1024Mi'
         cpu: '300m'
   cortx_resource:
     hax:
