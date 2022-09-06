@@ -2013,6 +2013,8 @@ class ProvDeployK8sCortxLib:
                 if res_type == "limits":
                     hare_hax_res[res_type]['memory'] = \
                         str(cortx_resource['hax'][res_type]['mem']//cvg_count)+"Mi"
+                    hare_hax_res[res_type]['cpu'] = \
+                        cortx_resource['hax'][res_type]['cpu']
                     server_res[res_type]['memory'] = \
                         str(cortx_resource['rgw'][res_type]['mem']//s3_instance)+"Mi"
                     server_res[res_type]['cpu'] = \
