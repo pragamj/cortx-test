@@ -309,6 +309,12 @@ CMD_PCS_SERV = "pcs status | grep {}"
 CMD_PCS_GET_XML = "pcs status xml"
 CMD_PCS_GREP = "pcs status --full | grep {}"
 CMD_SALT_GET_HOST = 'salt "*" grains.get host'
+CMD_CORTX_VERSION = 'cat /opt/seagate/cortx/RELEASE.INFO | grep VERSION'
+CMD_DECRYPT_CERTIFICATE = "openssl x509 -in " \
+        "/root/deploy-scripts/charts/cortx/ssl-cert/s3.seagate.com.pem -noout -{}"
+CMD_FETCH_CERTIFICATE_DETAILS = "openssl x509 -in " \
+                                "/root/deploy-scripts/charts/cortx/ssl-cert/s3.seagate.com.pem " \
+                                "-noout -{} -nameopt lname -nameopt sep_multiline"
 # LDAP commands
 CMD_GET_S3CIPHER_CONST_KEY = "s3cipher generate_key --const_key cortx"
 CMD_DECRYPT_S3CIPHER_CONST_KEY = "s3cipher decrypt --key {} --data {}"
@@ -403,8 +409,7 @@ M0CP = "m0cp -l {} -H {} -P {} -p {} -s {} -c {} -o {} -L {} {}"
 
 M0CP_G = "m0cp -G -l $ep -H $hax_ep -P $fid -p $prof_fid -s $bsize -c $count -o $obj -L" \
          " $layout $file"
-
-M0CP_U = "m0cp -G -l $ep -H $hax_ep -P $fid -p $prof_fid -s $bsize -c $count -o $obj -L" \
+M0CP_U_G = "m0cp -G -l $ep -H $hax_ep -P $fid -p $prof_fid -s $bsize -c $count -o $obj -L" \
          " $layout -O $off -u $file"
 M0TRACE = "m0trace -i $trace > $file"
 LIST_M0TRACE = "ls -ltr| grep m0|awk '{print $9}'"
@@ -423,6 +428,7 @@ FETCH_ID_EMAP = "grep -n {} -e \"{}\"|awk 'END{{print $9}}'"
 
 
 M0CAT = "m0cat -l {} -H {} -P {} -p {} -s {} -c {} -o {} -L {} {}"
+M0CAT_G = "m0cat -G -l {} -H {} -P {} -p {} -s {} -c {} -o {} -L {} {}"
 M0UNLINK = "m0unlink -l {} -H {} -P {} -p {} -o {} -L {}"
 M0KV = "m0kv -l {} -h {} -f {} -p {} {}"
 DIFF = "diff {} {}"
@@ -515,6 +521,8 @@ K8S_LDAP_CMD = "kubectl exec -it openldap-0 -- /bin/bash -c \"{}\""
 K8S_SVC_CMD = "kubectl get svc"
 K8S_TAINT_NODE = "kubectl taint node {} node-role.kubernetes.io/master=:NoSchedule"
 K8S_REMOVE_TAINT_NODE = "kubectl taint node {} node-role.kubernetes.io/master=:NoSchedule-"
+K8S_TAINT_CTRL = "kubectl taint nodes {} test=true:NoSchedule"
+K8S_UNTAINT_CTRL = "kubectl taint nodes {} test=true:NoSchedule-"
 K8S_CHK_TAINT = "kubectl describe node {} | grep Taints"
 K8S_CP_TO_LOCAL_CMD = "kubectl cp {}:{} {} -c {}"
 K8S_CP_PV_FILE_TO_LOCAL_CMD = "kubectl cp {}:{} {}"
@@ -575,6 +583,7 @@ KUBECTL_DEL_NAMESPACE = "kubectl delete ns {}"
 KUBECTL_DESCRIBE_POD_CMD = "kubectl describe pod {}"
 KUBECTL_GET_STATEFULSET = "kubectl get sts | grep '{}'"
 KUBECTL_CREATE_STATEFULSET_REPLICA = "kubectl scale statefulset {} --replicas {}"
+KUBECTL_GET_POD_PORTS = "kubectl get pods {} -o jsonpath='{{.spec.containers[*].ports}}'"
 
 # Fetch logs of a pod/service in a namespace.
 FETCH_LOGS = ""
