@@ -147,8 +147,8 @@ k8s_cortx_deploy:
   service_type: "LoadBalancer"
   lb_count: 1
   deployment_type: "standard"
-  data_disk_size: "20Gi"
-  metadata_disk_size: "20Gi"
+  data_disk_size: "25Gi"
+  metadata_disk_size: "25Gi"
   log_disk_size: "4Gi"
   git_k8_repo: "https://github.com/Seagate/cortx-k8s.git"
   git_k8_repo_file: "https://raw.githubusercontent.com/Seagate/cortx-k8s/$tag/k8_cortx_cloud/$file"
