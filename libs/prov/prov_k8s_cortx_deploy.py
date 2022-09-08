@@ -2016,9 +2016,9 @@ class ProvDeployK8sCortxLib:
                     hare_hax_res[res_type]['cpu'] = \
                         cortx_resource['hax'][res_type]['cpu']
                     server_res[res_type]['memory'] = \
-                        str(cortx_resource['rgw'][res_type]['mem']//s3_instance)+"Mi"
+                        str(cortx_resource['rgw'][res_type]['mem']//int(s3_instance))+"Mi"
                     server_res[res_type]['cpu'] = \
-                        str(cortx_resource['rgw'][res_type]['cpu']//s3_instance)+"m"
+                        str(cortx_resource['rgw'][res_type]['cpu']//int(s3_instance))+"m"
                 else:
                     hare_hax_res[res_type]['memory'] = \
                         cortx_resource['hax'][res_type]['mem']
