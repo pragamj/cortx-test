@@ -130,7 +130,7 @@ k8s_cortx_deploy:
   log_path: "/etc/cortx/log"
   custom_log_path: "/etc/cortx/custom/log"
   s3_max_start_timeout: 240
-  s3_instances_per_node: 2
+  s3_instances_per_node: 1
   container_group_size: 1
   sleep_time: 60
   service_delay: 120
@@ -242,7 +242,7 @@ k8s_cortx_deploy:
         mem: '1Gi'
         cpu: '500m'
       limits:
-        mem: 4096
+        mem: 4000
         cpu: 2000
     confd:
       requests:
@@ -256,7 +256,7 @@ k8s_cortx_deploy:
           mem: '1Gi'
           cpu: '500m'
         limits:
-          mem: 2048
+          mem: 2000
           cpu: 1500
     agent:
       requests:

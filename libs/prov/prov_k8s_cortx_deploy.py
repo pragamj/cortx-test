@@ -470,8 +470,8 @@ class ProvDeployK8sCortxLib:
         dix_data = kwargs.get("dix_data", 1)
         dix_parity = kwargs.get("dix_parity", 0)
         dix_spare = kwargs.get("dix_spare", 0)
-        size_metadata = kwargs.get("size_metadata", '20Gi')
-        size_data_disk = kwargs.get("size_data_disk", '20Gi')
+        size_metadata = kwargs.get("size_metadata", '25Gi')
+        size_data_disk = kwargs.get("size_data_disk", '25Gi')
         log_disk_size = kwargs.get("log_disk_size", '4Gi')
         skip_disk_count_check = kwargs.get("skip_disk_count_check", False)
         third_party_images_dict = kwargs.get("third_party_images",
@@ -2016,9 +2016,9 @@ class ProvDeployK8sCortxLib:
                     hare_hax_res[res_type]['cpu'] = \
                         cortx_resource['hax'][res_type]['cpu']
                     server_res[res_type]['memory'] = \
-                        str(cortx_resource['rgw'][res_type]['mem']//int(s3_instance))+"Mi"
+                        str(cortx_resource['rgw'][res_type]['mem']//s3_instance)+"Mi"
                     server_res[res_type]['cpu'] = \
-                        str(cortx_resource['rgw'][res_type]['cpu']//int(s3_instance))+"m"
+                        str(cortx_resource['rgw'][res_type]['cpu']//s3_instance)+"m"
                 else:
                     hare_hax_res[res_type]['memory'] = \
                         cortx_resource['hax'][res_type]['mem']
